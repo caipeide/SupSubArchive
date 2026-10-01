@@ -1,0 +1,40 @@
+# Android / Gradle 构建产物
+.gradle/
+build/
+**/build/
+.externalNativeBuild/
+.kotlin/
+captures/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# 本地 SDK 路径（机器相关，不入库）
+local.properties
+
+# 临时 / 产物
+*.apk
+*.aar
+
+# ── 调试 / 验证产物（本地测试时生成，勿入库）──
+verify_*.png
+*_dump*.xml
+nav_dump.xml
+window_dump*.xml
+dbcheck/
+dbcheck2/
+_archive*.db
+_device_archive.db
+_debug_archive.db
+archive_debug*.db
+archive_read.db
+supsub_archive.db
+supsub_archive.db-shm
+supsub_archive.db-wal
+_*.db
+*.log
+*.err
+*_resync*.py
+*.pyc

@@ -1,0 +1,85 @@
+name: 问题反馈
+description: 报告一个可复现的问题（崩溃、同步异常、界面错位等）
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        反馈前建议先看 [docs/troubleshooting.md](../blob/main/docs/troubleshooting.md)，
+        里面收了一批评测期间踩过的坑（Notion 鉴权失败、分库拉不到、限流触发等）。
+        请尽量把「怎么复现」写清楚——这一步比结论更重要。
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 问题描述
+      description: 发生了什么？你本来期望发生什么？
+      placeholder: |
+        实际：点「拉取更新」后进度停在 0%，随后提示…
+        期望：应当正常拉取到本地归档
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 在「设置」里完成设备授权登录
+        2. 进入「拉取」，开启「包含关注点内容」
+        3. 点击「拉取更新」
+        4. 观察进度卡片
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 应用版本
+      description: 设置页底部或 APK 文件名中的版本号
+      placeholder: v1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: 设备与系统
+      placeholder: OPPO PKJ110 / Android 16（ColorOS 16）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 相关模块
+      options:
+        - 登录 / 设备授权
+        - 拉取与限速
+        - 本地归档与备份
+        - 阅读与标记
+        - Notion 同步
+        - 离线模式
+        - 平板双栏布局
+        - 其他 / 不确定
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志（可选）
+      description: 若能拿到 logcat，请过滤 `SupsubHttp`、`RateLimit`、`ArchiveStore`、`NotionSync` 等 tag 后贴出。
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认
+      options:
+        - label: 我已搜索过现有 issue，没有重复
+          required: true
+        - label: 日志与截图中不含我的 Token、邮箱等敏感信息
+          required: true

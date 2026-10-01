@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用与排障问题
+    url: https://github.com/caipeide/SupSubArchive/blob/main/docs/troubleshooting.md
+    about: 同步失败、鉴权异常、拉取不到内容，先看这份排障笔记

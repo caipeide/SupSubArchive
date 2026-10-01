@@ -1,0 +1,20 @@
+# 默认按文本处理，统一 LF（Gradle / Kotlin 在 Windows 上对 CRLF 敏感）
+* text=auto eol=lf
+
+# Windows 批处理必须是 CRLF
+*.bat text eol=crlf
+
+# 二进制文件不做行尾转换
+*.jar  binary
+*.apk  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.db   binary
+
+# Gradle wrapper 的 jar 必须原样保留
+gradle/wrapper/gradle-wrapper.jar binary
+
+# 语言统计时把文档与截图排除，避免仓库被识别成「图片库」
+docs/screenshots/* linguist-vendored
