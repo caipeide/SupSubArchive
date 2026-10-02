@@ -31,9 +31,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Card
@@ -286,9 +284,9 @@ private fun OfflineBanner(onRetry: () -> Unit) {
 @Composable
 private fun FloatingNavBar(selectedTab: MainTab, onSelect: (MainTab) -> Unit) {
     val items = listOf(
-        Triple(MainTab.PULL, "拉取", Icons.Filled.Download),
-        Triple(MainTab.READ, "阅读", Icons.AutoMirrored.Filled.MenuBook),
-        Triple(MainTab.SYNC, "同步", Icons.Filled.Sync),
+        Triple(MainTab.PULL, "拉取", IconDownload),
+        Triple(MainTab.READ, "阅读", IconMenuBook),
+        Triple(MainTab.SYNC, "同步", Icons.Filled.Refresh),
     )
     Surface(
         modifier = Modifier

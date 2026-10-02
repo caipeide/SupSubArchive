@@ -43,17 +43,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CheckBox
-import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -944,14 +939,14 @@ private fun ClusterReadingCard(
             Spacer(Modifier.width(8.dp))
             // 聚合高价值星标（任意一篇高价值即亮）
             Icon(
-                if (anyHigh) Icons.Filled.Star else Icons.Filled.StarBorder,
+                if (anyHigh) Icons.Filled.Star else IconStarBorder,
                 contentDescription = "高价值",
                 tint = if (anyHigh) Color(0xFFBA7517) else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp),
             )
             Spacer(Modifier.width(4.dp))
             Icon(
-                if (expanded) Icons.Filled.ExpandMore else Icons.Filled.ChevronRight,
+                if (expanded) Icons.Filled.KeyboardArrowDown else Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = if (expanded) "收起" else "展开",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp),
@@ -1008,7 +1003,7 @@ private fun ReadMarkControls(
         Checkbox(checked = isUserRead, onCheckedChange = onUserRead)
         IconButton(onClick = { onHighValue(!isHighValue) }, modifier = Modifier.size(36.dp)) {
             Icon(
-                if (isHighValue) Icons.Filled.Star else Icons.Filled.StarBorder,
+                if (isHighValue) Icons.Filled.Star else IconStarBorder,
                 contentDescription = "高价值",
                 tint = if (isHighValue) Color(0xFFBA7517) else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp),
@@ -1144,7 +1139,7 @@ private fun ReadingDetailContent(
                             ) {
                                 Text("查看原文", style = MaterialTheme.typography.labelMedium)
                                 Spacer(Modifier.width(4.dp))
-                                Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null, modifier = Modifier.size(14.dp))
+                                Icon(IconOpenInNew, contentDescription = null, modifier = Modifier.size(14.dp))
                             }
                         }
                     }
@@ -1220,7 +1215,7 @@ private fun ReadingDetailContent(
                     modifier = Modifier.clickable { onUserRead(!item.isUserRead) },
                 ) {
                     Icon(
-                        if (item.isUserRead) Icons.Filled.CheckBox else Icons.Filled.CheckBoxOutlineBlank,
+                        if (item.isUserRead) IconCheckBox else IconCheckBoxOutlineBlank,
                         contentDescription = "实际已读",
                         tint = if (item.isUserRead) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp),
@@ -1234,7 +1229,7 @@ private fun ReadingDetailContent(
                     modifier = Modifier.clickable { onHighValue(!item.isHighValue) },
                 ) {
                     Icon(
-                        if (item.isHighValue) Icons.Filled.Star else Icons.Filled.StarBorder,
+                        if (item.isHighValue) Icons.Filled.Star else IconStarBorder,
                         contentDescription = "高价值",
                         tint = if (item.isHighValue) Color(0xFFBA7517) else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp),
