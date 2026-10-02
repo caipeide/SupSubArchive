@@ -25,10 +25,21 @@ jobs:
           java-version: '17'
 
       - name: 准备 Android SDK
-        uses: android-actions/setup-android@v3
+        run: |
+          # ubuntu-latest 预装 Android SDK；这里只把它的路径显式接入环境，
+          # 不使用 android-actions/setup-android（该 action 在 runner 上易失败）
+          SDK="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          echo "$SDK/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "$SDK/platform-tools" >> "$GITHUB_PATH"
+          echo "使用 SDK: $SDK"
+          ls "$SDK"
 
       - name: 安装所需 SDK 组件
-        run: sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
       - name: 配置 Gradle（含依赖缓存）
         uses: gradle/actions/setup-gradle@v4
