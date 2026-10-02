@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Android-10%2B-3DDC84?style=flat-square&logo=android" alt="Android 10+">
   <img src="https://img.shields.io/badge/Kotlin-Compose-7F52FF?style=flat-square&logo=kotlin" alt="Kotlin Compose">
   <img src="https://img.shields.io/badge/license-MIT-94B3A1?style=flat-square" alt="MIT License">
+  <a href="https://github.com/caipeide/SupSubArchive/releases/latest"><img src="https://img.shields.io/github/v/release/caipeide/SupSubArchive?style=flat-square&label=%E4%B8%8B%E8%BD%BD%20APK&color=2F81F7&logo=github" alt="下载 APK"></a>
 </p>
 
 <p align="center">
@@ -20,7 +21,7 @@
 </p>
 
 <p align="center">
-  <a href="#快速开始">快速开始</a> · <a href="#界面预览">界面预览</a> · <a href="#自行构建">自行构建</a> · <a href="#赞赏">赞赏</a>
+  <a href="#快速开始">快速开始</a> · <a href="#界面预览">界面预览</a> · <a href="#自行构建">自行构建</a> · <a href="#赞赏">赞赏</a> · <a href="#下载">下载</a>
 </p>
 
 > 本项目是社区开发的第三方客户端，与 SupSub 官方无隶属关系；接口字段结构参考开源的 [supsub-cli](https://github.com/SupSub-AI/supsub-cli)。
@@ -98,7 +99,7 @@
 
 ## 快速开始
 
-1. **装**：按下方「自行构建」生成 APK，安装到 Android 10 及以上设备，打开后完成 SupSub 设备授权。
+1. **装**：到 [Releases](https://github.com/caipeide/SupSubArchive/releases/latest) 下载 APK 安装（或按下方「自行构建」自行编译），打开后完成 SupSub 设备授权。
 2. **配**（可选，不需要 Notion 也可以只用本地归档）：在「Notion 同步」里填入自己的 Integration Token 与容器页 ID，点右上角「配置」可随时改。
 3. **拉**：回到「拉取」页按下「拉取更新」，等归档完成即可在阅读页翻。
 
@@ -171,6 +172,20 @@ SubSup/
 代码开源、免费、无内购。如果它帮你省下了每天翻订阅的时间，欢迎赞赏。
 
 <a href="docs/donate/reward.png"><img src="docs/donate/reward.png" width="170" alt="赞赏码"></a>
+
+## 下载
+
+不想自己编译的话，直接下载安装：
+
+<p align="center">
+  <a href="https://github.com/caipeide/SupSubArchive/releases/latest">
+    <img src="https://img.shields.io/github/v/release/caipeide/SupSubArchive?style=flat-square&label=%E4%B8%8B%E8%BD%BD%20APK&color=7F52FF" alt="下载 APK">
+  </a>
+</p>
+
+- 产物为 **debug 构建**（未使用正式签名），安装时系统会提示「未知来源」，属正常现象。
+- 包名 `com.peide.supsub.notion`。若已装其他签名的同包名应用（含自行编译的包），需先卸载再安装。
+- 最低支持 **Android 10（API 29）**；每个版本的变化见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 许可
 
