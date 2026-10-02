@@ -1,0 +1,88 @@
+name: Release
+
+# 打 tag（v*）时自动构建 APK 并发布 Release；
+# 也可在 Actions 页面手动 Run workflow（指定一个已存在的 tag）。
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要发布的 tag（需已存在）'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: 构建并发布
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: 安装 JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 准备 Android SDK
+        run: |
+          # ubuntu-latest 预装 Android SDK；这里只把它的路径显式接入环境，
+          # 不使用 android-actions/setup-android（该 action 在 runner 上易失败）
+          SDK="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          echo "$SDK/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "$SDK/platform-tools" >> "$GITHUB_PATH"
+          echo "使用 SDK: $SDK"
+
+      - name: 安装所需 SDK 组件
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+
+      - name: 配置 Gradle（含依赖缓存）
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: 编译 debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: 整理产物
+        id: pack
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          APK="SupSub-${TAG}-debug.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk "$APK"
+          echo "apk=$APK" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          ls -lh "$APK"
+          echo "SHA256: $(sha256sum "$APK" | cut -d' ' -f1)"
+
+      - name: 创建 Release 并上传 APK
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.pack.outputs.tag }}"
+          NOTES=".github/release-notes/${TAG}.md"
+          # 已存在同名 Release 时先删除，保证可重复执行（tag 本身保留）
+          gh release delete "$TAG" --yes 2>/dev/null || true
+          if [ -f "$NOTES" ]; then
+            gh release create "$TAG" \
+              --title "SubSup 订阅归档 ${TAG}" \
+              --notes-file "$NOTES" \
+              "${{ steps.pack.outputs.apk }}"
+          else
+            gh release create "$TAG" \
+              --title "SubSup 订阅归档 ${TAG}" \
+              --generate-notes \
+              "${{ steps.pack.outputs.apk }}"
+          fi
+          echo "=== Release 已创建 ==="
+          gh release view "$TAG" --json url,assets --jq '.url, (.assets[] | "\(.name)  \(.size) bytes")'
